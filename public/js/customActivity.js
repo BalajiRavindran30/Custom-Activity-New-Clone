@@ -73,6 +73,18 @@ define([
         if (data) {
             payload = data;
         }
+	var dataOptions = new Array("firstName","lastName","name","email","title","phone","birthdate","preferredName","sourceId","sourceOwnerId","sourceOrganizationId");
+	    
+	for (var i=0; i < dataOptions.length;++i){
+		addOption($('#select-hearsay1'), dataOptions[i], dataOptions[i]);
+		addOption($('#select-hearsay2'), dataOptions[i], dataOptions[i]);
+		addOption($('#select-hearsay3'), dataOptions[i], dataOptions[i]);
+		addOption($('#select-hearsay4'), dataOptions[i], dataOptions[i]);
+		addOption($('#select-hearsay5'), dataOptions[i], dataOptions[i]);
+		addOption($('#select-hearsay6'), dataOptions[i], dataOptions[i]);
+		addOption($('#select-hearsay7'), dataOptions[i], dataOptions[i]);
+		addOption($('#select-hearsay8'), dataOptions[i], dataOptions[i]);
+	}
 	
 	fetch("/retrieve/DERows/", {
 		method: "POST"
@@ -136,6 +148,10 @@ define([
             $('#intTypeValues').html(div_data);
             showStep(null, 3);
         }
+    }
+	
+    function addOption(selectbox,text,value ) {
+    	selectbox.append('<option value="'+value+'">'+text.charAt(0).toUpperCase() + text.slice(1)+'</option>');
     }
     
     function intializeSelectJourney(targetId) {

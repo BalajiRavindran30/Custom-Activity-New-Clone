@@ -19,7 +19,23 @@
             ];
 
             require(config, dependencies);
+	    
+	    var dataOptions = new Array("firstName","lastName","name","email","title","phone","birthdate","preferredName","sourceId","sourceOwnerId","sourceOrganizationId");
+	    
+	    for (var i=0; i < dataOptions.length;++i){
+	    	addOption($('#select-journey'), dataOptions[i], dataOptions[i]);
+		addOption($('#select-journey2'), dataOptions[i], dataOptions[i]);
+		addOption($('#select-journey3'), dataOptions[i], dataOptions[i]);
+		addOption($('#select-journey4'), dataOptions[i], dataOptions[i]);
+		addOption($('#select-journey5'), dataOptions[i], dataOptions[i]);
+		addOption($('#select-journey6'), dataOptions[i], dataOptions[i]);
+		addOption($('#select-journey7'), dataOptions[i], dataOptions[i]);
+		addOption($('#select-journey8'), dataOptions[i], dataOptions[i]);
+	    }
         })();
+	function addOption(selectbox,text,value ) {
+		selectbox.append('<option value="'+value+'">'+text.charAt(0).toUpperCase() + text.slice(1)+'</option>');
+	}
     </script>
     <!--Styles-->
     <style type="text/css">

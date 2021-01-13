@@ -19,23 +19,7 @@
             ];
 
             require(config, dependencies);
-	    
-	    var dataOptions = new Array("firstName","lastName","name","email","title","phone","birthdate","preferredName","sourceId","sourceOwnerId","sourceOrganizationId");
-	    
-	    for (var i=0; i < dataOptions.length;++i){
-	    	addOption($('#select-journey'), dataOptions[i], dataOptions[i]);
-		addOption($('#select-journey2'), dataOptions[i], dataOptions[i]);
-		addOption($('#select-journey3'), dataOptions[i], dataOptions[i]);
-		addOption($('#select-journey4'), dataOptions[i], dataOptions[i]);
-		addOption($('#select-journey5'), dataOptions[i], dataOptions[i]);
-		addOption($('#select-journey6'), dataOptions[i], dataOptions[i]);
-		addOption($('#select-journey7'), dataOptions[i], dataOptions[i]);
-		addOption($('#select-journey8'), dataOptions[i], dataOptions[i]);
-	    }
         })();
-	function addOption(selectbox,text,value ) {
-		selectbox.append('<option value="'+value+'">'+text.charAt(0).toUpperCase() + text.slice(1)+'</option>');
-	}
     </script>
     <!--Styles-->
     <style type="text/css">
@@ -134,17 +118,6 @@
 				<div class="slds-select_container">
 				   <select class="slds-select hearsay" id="select-hearsay1">
 					  <option value="">--Select--</option>
-					  <option value="BirthDate">Birth Date</option>
-					  <option value="CustomerUniqueID">Customer Unique ID</option>
-					  <option value="HearsayOrgID">Hearsay Org ID</option>
-					  <option value="Email">Email</option>
-					  <option value="HearsyUserReferenceID">Hearsy User Reference ID</option>
-					  <option value="FirstName">First Name</option>
-					  <option value="LastName">Last Name</option>
-					  <option value="Name">Name</option>
-					  <option value="Phone">Phone</option>
-					  <option value="PreferredName">Preferred Name</option>
-					  <option value="Title">Title</option>
 				   </select>
 				</div>
 			 </div>
@@ -191,17 +164,6 @@
 				 <div class="slds-select_container">
 					<select class="slds-select hearsay" id="select-hearsay2">
 					   <option value="">--Select--</option>
-					   <option value="BirthDate">Birth Date</option>
-					   <option value="CustomerUniqueID">Customer Unique ID</option>
-					   <option value="HearsayOrgID">Hearsay Org ID</option>
-					   <option value="Email">Email</option>
-					   <option value="HearsyUserReferenceID">Hearsy User Reference ID</option>
-					   <option value="FirstName">First Name</option>
-					   <option value="LastName">Last Name</option>
-					   <option value="Name">Name</option>
-					   <option value="Phone">Phone</option>
-					   <option value="PreferredName">Preferred Name</option>
-					   <option value="Title">Title</option>
 					</select>
 				 </div>
 			  </div>
@@ -248,17 +210,6 @@
 				 <div class="slds-select_container">
 					<select class="slds-select hearsay" id="select-hearsay3">
 					   <option value="">--Select--</option>
-					   <option value="BirthDate">Birth Date</option>
-					   <option value="CustomerUniqueID">Customer Unique ID</option>
-					   <option value="HearsayOrgID">Hearsay Org ID</option>
-					   <option value="Email">Email</option>
-					   <option value="HearsyUserReferenceID">Hearsy User Reference ID</option>
-					   <option value="FirstName">First Name</option>
-					   <option value="LastName">Last Name</option>
-					   <option value="Name">Name</option>
-					   <option value="Phone">Phone</option>
-					   <option value="PreferredName">Preferred Name</option>
-					   <option value="Title">Title</option>
 					</select>
 				 </div>
 			  </div>
@@ -305,17 +256,6 @@
 				 <div class="slds-select_container">
 					<select class="slds-select hearsay" id="select-hearsay4">
 					   <option value="">--Select--</option>
-					   <option value="BirthDate">Birth Date</option>
-					   <option value="CustomerUniqueID">Customer Unique ID</option>
-					   <option value="HearsayOrgID">Hearsay Org ID</option>
-					   <option value="Email">Email</option>
-					   <option value="HearsyUserReferenceID">Hearsy User Reference ID</option>
-					   <option value="FirstName">First Name</option>
-					   <option value="LastName">Last Name</option>
-					   <option value="Name">Name</option>
-					   <option value="Phone">Phone</option>
-					   <option value="PreferredName">Preferred Name</option>
-					   <option value="Title">Title</option>
 					</select>
 				 </div>
 			  </div>
@@ -362,17 +302,6 @@
 				 <div class="slds-select_container">
 					<select class="slds-select hearsay" id="select-hearsay5">
 					   <option value="">--Select--</option>
-					   <option value="BirthDate">Birth Date</option>
-					   <option value="CustomerUniqueID">Customer Unique ID</option>
-					   <option value="HearsayOrgID">Hearsay Org ID</option>
-					   <option value="Email">Email</option>
-					   <option value="HearsyUserReferenceID">Hearsy User Reference ID</option>
-					   <option value="FirstName">First Name</option>
-					   <option value="LastName">Last Name</option>
-					   <option value="Name">Name</option>
-					   <option value="Phone">Phone</option>
-					   <option value="PreferredName">Preferred Name</option>
-					   <option value="Title">Title</option>
 					</select>
 				 </div>
 			  </div>
@@ -419,17 +348,6 @@
 				 <div class="slds-select_container">
 					<select class="slds-select hearsay" id="select-hearsay6">
 					   <option value="">--Select--</option>
-					   <option value="BirthDate">Birth Date</option>
-					   <option value="CustomerUniqueID">Customer Unique ID</option>
-					   <option value="HearsayOrgID">Hearsay Org ID</option>
-					   <option value="Email">Email</option>
-					   <option value="HearsyUserReferenceID">Hearsy User Reference ID</option>
-					   <option value="FirstName">First Name</option>
-					   <option value="LastName">Last Name</option>
-					   <option value="Name">Name</option>
-					   <option value="Phone">Phone</option>
-					   <option value="PreferredName">Preferred Name</option>
-					   <option value="Title">Title</option>
 					</select>
 				 </div>
 			  </div>
@@ -477,17 +395,6 @@
 				 <div class="slds-select_container">
 					<select class="slds-select hearsay" id="select-hearsay7">
 					   <option value="">--Select--</option>
-					   <option value="BirthDate">Birth Date</option>
-					   <option value="CustomerUniqueID">Customer Unique ID</option>
-					   <option value="HearsayOrgID">Hearsay Org ID</option>
-					   <option value="Email">Email</option>
-					   <option value="HearsyUserReferenceID">Hearsy User Reference ID</option>
-					   <option value="FirstName">First Name</option>
-					   <option value="LastName">Last Name</option>
-					   <option value="Name">Name</option>
-					   <option value="Phone">Phone</option>
-					   <option value="PreferredName">Preferred Name</option>
-					   <option value="Title">Title</option>
 					</select>
 				 </div>
 			  </div>
@@ -535,17 +442,6 @@
 				 <div class="slds-select_container">
 					<select class="slds-select hearsay" id="select-hearsay8">
 						<option value="">--Select--</option>
-						<option value="BirthDate">Birth Date</option>
-						<option value="CustomerUniqueID">Customer Unique ID</option>
-						<option value="HearsayOrgID">Hearsay Org ID</option>
-						<option value="Email">Email</option>
-						<option value="HearsyUserReferenceID">Hearsy User Reference ID</option>
-						<option value="FirstName">First Name</option>
-						<option value="LastName">Last Name</option>
-						<option value="Name">Name</option>
-						<option value="Phone">Phone</option>
-						<option value="PreferredName">Preferred Name</option>
-						<option value="Title">Title</option>
 					  </select>
 				 </div>
 			  </div>

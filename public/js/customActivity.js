@@ -454,7 +454,6 @@ define([
     function save() {
         var name = getIntegrationName('#select-01');
 	var inputValue;
-        payload.name = inputValue;
 	
 	if(name == 'Current Journey'){
 		   inputValue = $('#text-input-id-1').val().toString();
@@ -465,6 +464,7 @@ define([
 	   inputValue = name;
 	}
 	   
+	payload.name = inputValue;
 	console.log('hearsayfields '+hearsayfields);
         payload['arguments'].execute.inArguments = [{ "hearsayfields": hearsayfields }];
 

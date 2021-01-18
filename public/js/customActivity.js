@@ -37,26 +37,6 @@ define([
         connection.trigger('requestEndpoints');
         connection.trigger('requestSchema');
 	    
-	$("#select-hearsay1 option").filter(function() {
-		$('.slds-select.journey').not($('#select-hearsay1')[0]).find('option[value="Name"]').hide();
-		return this.text == 'Name';
-	}).attr('selected', true);
-	    
-	$("#select-hearsay2 option").filter(function() {
-		$('.slds-select.journey').not($('#select-hearsay2')[0]).find('option[value="SourceId"]').hide();
-		return this.text == 'SourceId'; 
-	}).attr('selected', true);
-	    
-	$("#select-hearsay3 option").filter(function() {
-		$('.slds-select.journey').not($('#select-hearsay3')[0]).find('option[value="SourceOwnerId"]').hide();
-		return this.text == 'SourceOwnerId'; 
-	}).attr('selected', true);
-		
-	$("#select-hearsay4 option").filter(function() {
-		$('.slds-select.journey').not($('#select-hearsay4')[0]).find('option[value="SourceOrganizationId"]').hide();
-		return this.text == 'SourceOrganizationId'; 
-	}).attr('selected', true);
-	    
         // Disable the next button if a value isn't selected
 	$('.slds-select.hearsay').on('change', function(event) {
 		$('.slds-select.hearsay').find('option').show();
@@ -149,6 +129,25 @@ define([
                 }
             });
         });
+	    
+	$("#select-hearsay1 option").filter(function() {
+		return this.text == 'Name';
+	}).attr('selected', true);
+	    
+	$("#select-hearsay2 option").filter(function() {
+		intializeSelectHearsay('select-hearsay2');
+		return this.text == 'SourceId'; 
+	}).attr('selected', true);
+	    
+	$("#select-hearsay3 option").filter(function() {
+		intializeSelectHearsay('select-hearsay3');
+		return this.text == 'SourceOwnerId'; 
+	}).attr('selected', true);
+		
+	$("#select-hearsay4 option").filter(function() {
+		intializeSelectHearsay('select-hearsay4');
+		return this.text == 'SourceOrganizationId'; 
+	}).attr('selected', true);
 
         // If there is no message selected, disable the next button
         if (!mapfields) {
@@ -308,6 +307,10 @@ define([
 			showStep(null, 1);
 			connection.trigger('ready');
 		} else {
+			intializeSelectHearsay('select-hearsay1');
+			intializeSelectHearsay('select-hearsay2');
+			intializeSelectHearsay('select-hearsay3');
+			intializeSelectHearsay('select-hearsay4');
 			connection.trigger('nextStep');	
 		}
             }

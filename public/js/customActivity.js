@@ -53,7 +53,7 @@ define([
 	}).attr('selected', true);
 		
 	$("#select-hearsay4 option").filter(function() {
-		$('.slds-select.journey').not($('#select-hearsay4)[0]').find('option[value="SourceOrganizationId"]').hide();
+		$('.slds-select.journey').not($('#select-hearsay4')[0]).find('option[value="SourceOrganizationId"]').hide();
 		return this.text == 'SourceOrganizationId'; 
 	}).attr('selected', true);
 	    

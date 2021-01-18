@@ -37,6 +37,26 @@ define([
         connection.trigger('requestEndpoints');
         connection.trigger('requestSchema');
 	    
+	$("#select-hearsay1 option").filter(function() {
+		$('.slds-select.journey').not($('#select-hearsay1')[0]).find('option[value="Name"]').hide();
+		return this.text == 'Name';
+	}).attr('selected', true);
+	    
+	$("#select-hearsay2 option").filter(function() {
+		$('.slds-select.journey').not($('#select-hearsay2')[0]).find('option[value="SourceId"]').hide();
+		return this.text == 'SourceId'; 
+	}).attr('selected', true);
+	    
+	$("#select-hearsay3 option").filter(function() {
+		$('.slds-select.journey').not($('#select-hearsay3')[0]).find('option[value="SourceOwnerId"]').hide();
+		return this.text == 'SourceOwnerId'; 
+	}).attr('selected', true);
+		
+	$("#select-hearsay4 option").filter(function() {
+		$('.slds-select.journey').not($('#select-hearsay4)[0]').find('option[value="SourceOrganizationId"]').hide();
+		return this.text == 'SourceOrganizationId'; 
+	}).attr('selected', true);
+	    
         // Disable the next button if a value isn't selected
 	$('.slds-select.hearsay').on('change', function(event) {
 		$('.slds-select.hearsay').find('option').show();
@@ -293,21 +313,6 @@ define([
             }
         } else if(currentStep.key === 'step2'){
 	    hearsayfields = {};
-	    $("#select-hearsay1 option").filter(function() {
-		return this.text == 'Name'; 
-	    }).attr('selected', true);
-	    
-	    $("#select-hearsay2 option").filter(function() {
-		return this.text == 'SourceId'; 
-	    }).attr('selected', true);
-	    
-	    $("#select-hearsay3 option").filter(function() {
-		return this.text == 'SourceOwnerId'; 
-	    }).attr('selected', true);
-		
-	    $("#select-hearsay4 option").filter(function() {
-		return this.text == 'SourceOrganizationId'; 
-	    }).attr('selected', true);
 		
             if(getIntegrationName('#select-journey1') != '--Select--' && getIntegrationName('#select-hearsay1') != '--Select--') hearsayfields [getIntegrationType('#select-hearsay1')] = getIntegrationType('#select-journey1');
             if(getIntegrationName('#select-journey2') != '--Select--' && getIntegrationName('#select-hearsay2') != '--Select--') hearsayfields [getIntegrationType('#select-hearsay2')] = getIntegrationType('#select-journey2');
@@ -445,13 +450,16 @@ define([
 
     function save() {
         var name = getIntegrationName('#select-01');
-	var inputValue = $('#text-input-id-1').val().toString();
+	var inputValue;
         payload.name = inputValue;
 	
 	if(name == 'Current Journey'){
+		   inputValue = $('#text-input-id-1').val().toString();
 		   for(var x in hearsayfields){
 			hearsayfields[x] = '{{'+eventDefKey+'.\"' +hearsayfields[x].toString()+ '\"}}';
 		   }
+	} else {
+	   inputValue = name;
 	}
 	   
 	console.log('hearsayfields '+hearsayfields);

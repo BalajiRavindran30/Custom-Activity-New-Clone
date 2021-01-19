@@ -458,8 +458,9 @@ define([
 	    
 	if(name == 'Current Journey'){
 		   inputValue = $('#text-input-id-1').val().toString();
-		   var fieldName = hearsayfields[x].toString();
+		   var fieldName;
 		   for(var x in hearsayfields){
+			fieldName =  hearsayfields[x].toString();
 			hearsayfields[x] = '{{'+eventDefKey+'.\"' +fieldName+ '\"}}';
 			if(fieldName.toLowerCase() == 'email'){
 			   	fieldListString += '<Field>'
@@ -471,6 +472,7 @@ define([
 				+'<IsPrimaryKey>true</IsPrimaryKey>'
 				+'</Field>'
 			} else {
+				fieldName =  hearsayfields[x].toString();
 				fieldListString += '<Field>'
 				+'<CustomerKey>'+fieldName+'</CustomerKey>'
 				+'<Name>'+fieldName+'</Name>'
@@ -517,6 +519,7 @@ define([
 	fetch("/create/dextension/", {
 		method: "POST",
 		body: JSON.stringify({
+		    name: inputValue,
 		    token: authToken,
 		    xmlData: rawXMLdata
 		}),

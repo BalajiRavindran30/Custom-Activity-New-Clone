@@ -112,12 +112,14 @@ exports.createDExtension = function (req, res) {
     // Data from the req and put it in an array accessible to the main app.
     //console.log( req.body );
     console.log('request DEName is '+JSON.stringify(req.body));
-    var templateName = req.body.DEName;
+    var templateName = req.body.name;
     var xml2js = require('xml2js');
     
     
     if(req.body.xmlData) var data = req.body.xmlData.replace('{{et_subdomain}}','mc4f63jqqhfc51yw6d1h0n1ns1-m');
     if(req.body.token) data = data.replace('{{dne_etAccessToken}}',req.body.token.toString());
+    if(templateName) data = data.replace('DEKey', templateName+'Key').replace('DEName', templateName);
+    
     console.log('data is '+data);
     var config = {
       method: 'post',

@@ -86,7 +86,7 @@ define([
 		addOption($('#select-hearsay8'), dataOptions[i], dataOptions[i]);
 	}
 	
-	fetch("/retrieve/DERows/", {
+	fetch("/retrieve/derows/", {
 		method: "POST"
 	})
 	.then(response => response.text())
@@ -256,7 +256,7 @@ define([
     function onGetTokens (tokens) {
         // Response: tokens = { token: <legacy token>, fuel2token: <fuel api token> }
          console.log(tokens);
-	    authToken = tokens.token;
+	    authToken = tokens.fuel2token;
     }
     
     function onRequestSchema(data){
@@ -454,16 +454,81 @@ define([
     function save() {
         var name = getIntegrationName('#select-01');
 	var inputValue;
-	
+	var fieldListString = '';
+	    
 	if(name == 'Current Journey'){
 		   inputValue = $('#text-input-id-1').val().toString();
+		   var fieldName = hearsayfields[x].toString();
 		   for(var x in hearsayfields){
-			hearsayfields[x] = '{{'+eventDefKey+'.\"' +hearsayfields[x].toString()+ '\"}}';
+			hearsayfields[x] = '{{'+eventDefKey+'.\"' +fieldName+ '\"}}';
+			if(fieldName.toLowerCase() == 'email'){
+			   	fieldListString += '<Field>'
+				+'<CustomerKey>'+fieldName+'</CustomerKey>'
+				+'<Name>'+fieldName+'</Name>'
+				+'<FieldType>EmailAddress</FieldType>'
+				+'<MaxLength>250</MaxLength>'
+				+'<IsRequired>false</IsRequired>'
+				+'<IsPrimaryKey>true</IsPrimaryKey>'
+				+'</Field>'
+			} else {
+				fieldListString += '<Field>'
+				+'<CustomerKey>'+fieldName+'</CustomerKey>'
+				+'<Name>'+fieldName+'</Name>'
+				+'<FieldType>Text</FieldType>'
+				+'<MaxLength>50</MaxLength>'
+				+'<IsRequired>false</IsRequired>'
+				+'<IsPrimaryKey>false</IsPrimaryKey>'
+				+'</Field>'	
+			}
 		   }
 	} else {
 	   inputValue = name;
 	}
-	   
+	console.log('fieldListString '+fieldListString);
+	var rawXMLdata = '<?xml version="1.0" encoding="UTF-8"?>'
+			+'<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:u="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">'
+			+'  <s:Header>'
+			+'	<a:Action s:mustUnderstand="1">Create</a:Action>'
+			+'	<a:To s:mustUnderstand="1">https://{{et_subdomain}}.soap.marketingcloudapis.com/Service.asmx</a:To>'
+			+'	<fueloauth xmlns="http://exacttarget.com">{{dne_etAccessToken}}</fueloauth>'
+			+'    </s:Header>'
+			+'    <s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">'
+			+'	<CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">'
+			+'	    <Objects xsi:type="DataExtension">'
+			+'		<CustomerKey>CustomerKey</CustomerKey>'
+			+'		<Name>DEName</Name>'
+			+'		<IsSendable>true</IsSendable>'
+			+'		<SendableDataExtensionField>'
+			+'		    <CustomerKey>Email</CustomerKey>'
+			+'		    <Name>Email</Name>'
+			+'		    <FieldType>EmailAddress</FieldType>'
+			+'		</SendableDataExtensionField>'
+			+'		<SendableSubscriberField>'
+			+'		    <Name>Subscriber Key</Name>'
+			+'		    <Value></Value>'
+			+'		</SendableSubscriberField>'
+			+'		<Fields>'+fieldListString+
+			+'		</Fields>'
+			+'	    </Objects>'
+			+'	</CreateRequest>'
+			+'    </s:Body>'
+			+'</s:Envelope>'
+	
+	fetch("/create/dextension/", {
+		method: "POST",
+		body: JSON.stringify({
+		    token: authToken,
+		    xmlData: rawXMLdata
+		}),
+	})
+	.then(response => response.text())
+	.then(dataValue => {
+		console.log('Success:', dataValue);	
+	})
+	.catch((error) => {
+		console.log('error:', error);
+	});
+	    
 	payload.name = inputValue;
 	console.log('hearsayfields '+hearsayfields);
         payload['arguments'].execute.inArguments = [{ "hearsayfields": hearsayfields }];

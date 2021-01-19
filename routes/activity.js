@@ -115,11 +115,13 @@ exports.createDExtension = function (req, res) {
     var templateName = req.body.DEName;
     var xml2js = require('xml2js');
     
-    var data = req.body.xmlData;
     
+    if(req.body.xmlData) var data = req.body.xmlData.replace('{{et_subdomain}}','mc4f63jqqhfc51yw6d1h0n1ns1-m');
+    if(req.body.token) data = data.replace('{{dne_etAccessToken}}',req.body.token.toString());
+    console.log('data is '+data);
     var config = {
       method: 'post',
-      url: 'https://mc4f63jqqhfc51yw6d1h0n1ns1-m.auth.marketingcloudapis.com/Service.asmx',
+      url: 'https://mc4f63jqqhfc51yw6d1h0n1ns1-m.soap.marketingcloudapis.com/Service.asmx',
       headers: { 
         'Content-Type': 'text/xml'
       },

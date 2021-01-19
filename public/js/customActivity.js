@@ -458,7 +458,7 @@ define([
 	    
 	if(name == 'Current Journey'){
 		   inputValue = $('#text-input-id-1').val().toString();
-		   var fieldName;
+		   let fieldName = '';
 		   for(var x in hearsayfields){
 			fieldName =  hearsayfields[x].toString();
 			hearsayfields[x] = '{{'+eventDefKey+'.\"' +fieldName+ '\"}}';
@@ -483,54 +483,56 @@ define([
 				+'</Field>'	
 			}
 		   }
+		
+		console.log('fieldListString '+fieldListString);
+		let soapMessage = '<?xml version="1.0" encoding="UTF-8"?>'
+		+'<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:u="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">'
+		+'    <s:Header>'
+		+'        <a:Action s:mustUnderstand="1">Retrieve</a:Action>'
+		+'        <a:To s:mustUnderstand="1">https://mc4f63jqqhfc51yw6d1h0n1ns1-m.soap.marketingcloudapis.com/Service.asmx</a:To>'
+		+'        <fueloauth xmlns="http://exacttarget.com">'+authToken+'</fueloauth>'
+		+'    </s:Header>'
+		+'    <s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">'
+		+'        <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">'
+		+'<Objects xsi:type="DataExtension">'
+		+'<CustomerKey>DEKey</CustomerKey>'
+                +'<Name>DEName</Name>'
+                +'<IsSendable>true</IsSendable>'
+                +'<SendableDataExtensionField>'
+                +'    <CustomerKey>Email</CustomerKey>'
+                +'    <Name>Email</Name>'
+                +'    <FieldType>EmailAddress</FieldType>'
+                +'</SendableDataExtensionField>'
+                +'<SendableSubscriberField>'
+                +'    <Name>Subscriber Key</Name>'
+                +'    <Value></Value>'
+                +'</SendableSubscriberField>'
+		+'<Fields>'
+		+fieldListString+
+		+'</Fields>'
+		+'        </CreateRequest>'
+		+'    </s:Body>'
+		+'</s:Envelope>';
+		
+		console.log('soapMessage '+soapMessage);
+		
+		fetch("/create/dextension/", {
+			method: "POST",
+			body: JSON.stringify({
+			    name: inputValue,
+			    xmlData: soapMessage
+			}),
+		})
+		.then(response => response.text())
+		.then(dataValue => {
+			console.log('Success:', dataValue);	
+		})
+		.catch((error) => {
+			console.log('error:', error);
+		});
 	} else {
 	   inputValue = name;
 	}
-	console.log('fieldListString '+fieldListString);
-	var rawXMLdata = '<?xml version="1.0" encoding="UTF-8"?>'
-			+'<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:u="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">'
-			+'  <s:Header>'
-			+'	<a:Action s:mustUnderstand="1">Create</a:Action>'
-			+'	<a:To s:mustUnderstand="1">https://{{et_subdomain}}.soap.marketingcloudapis.com/Service.asmx</a:To>'
-			+'	<fueloauth xmlns="http://exacttarget.com">{{dne_etAccessToken}}</fueloauth>'
-			+'    </s:Header>'
-			+'    <s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">'
-			+'	<CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">'
-			+'	    <Objects xsi:type="DataExtension">'
-			+'		<CustomerKey>DEKey</CustomerKey>'
-			+'		<Name>DEName</Name>'
-			+'		<IsSendable>true</IsSendable>'
-			+'		<SendableDataExtensionField>'
-			+'		    <CustomerKey>Email</CustomerKey>'
-			+'		    <Name>Email</Name>'
-			+'		    <FieldType>EmailAddress</FieldType>'
-			+'		</SendableDataExtensionField>'
-			+'		<SendableSubscriberField>'
-			+'		    <Name>Subscriber Key</Name>'
-			+'		    <Value></Value>'
-			+'		</SendableSubscriberField>'
-			+'		<Fields>'+fieldListString+
-			+'		</Fields>'
-			+'	    </Objects>'
-			+'	</CreateRequest>'
-			+'    </s:Body>'
-			+'</s:Envelope>'
-	
-	fetch("/create/dextension/", {
-		method: "POST",
-		body: JSON.stringify({
-		    name: inputValue,
-		    token: authToken,
-		    xmlData: rawXMLdata
-		}),
-	})
-	.then(response => response.text())
-	.then(dataValue => {
-		console.log('Success:', dataValue);	
-	})
-	.catch((error) => {
-		console.log('error:', error);
-	});
 	    
 	payload.name = inputValue;
 	console.log('hearsayfields '+hearsayfields);

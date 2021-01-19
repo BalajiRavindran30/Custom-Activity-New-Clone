@@ -461,7 +461,6 @@ define([
 		   let fieldName = '';
 		   for(var x in hearsayfields){
 			fieldName =  hearsayfields[x].toString();
-			hearsayfields[x] = '{{'+eventDefKey+'.\"' +fieldName+ '\"}}';
 			if(fieldName.toLowerCase() == 'email'){
 			   	fieldListString += '<Field>'
 				+'<CustomerKey>'+fieldName+'</CustomerKey>'
@@ -472,7 +471,6 @@ define([
 				+'<IsPrimaryKey>true</IsPrimaryKey>'
 				+'</Field>'
 			} else {
-				fieldName =  hearsayfields[x].toString();
 				fieldListString += '<Field>'
 				+'<CustomerKey>'+fieldName+'</CustomerKey>'
 				+'<Name>'+fieldName+'</Name>'
@@ -482,6 +480,7 @@ define([
 				+'<IsPrimaryKey>false</IsPrimaryKey>'
 				+'</Field>'	
 			}
+			hearsayfields[x] = '{{'+eventDefKey+'.\"' +fieldName+ '\"}}';   
 		   }
 		
 		console.log('fieldListString '+fieldListString);

@@ -108,6 +108,34 @@ exports.publish = function (req, res) {
     res.send(200, 'Publish');
 };
 
+exports.createDExtension = function (req, res) {
+    // Data from the req and put it in an array accessible to the main app.
+    //console.log( req.body );
+    console.log('request DEName is '+JSON.stringify(req.body));
+    var templateName = req.body.DEName;
+    var xml2js = require('xml2js');
+    
+    var data = req.body.xmlData;
+    
+    var config = {
+      method: 'post',
+      url: 'https://mc4f63jqqhfc51yw6d1h0n1ns1-m.auth.marketingcloudapis.com/Service.asmx',
+      headers: { 
+        'Content-Type': 'text/xml'
+      },
+      data : data
+    };
+
+    axios(config)
+    .then(function (response) {
+      console.log('DE Created Successfully');
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
 exports.DERow = function (req, res) {
     // Data from the req and put it in an array accessible to the main app.
     //console.log( req.body );
@@ -278,30 +306,6 @@ exports.retrieveDERows =  function (req, res) {
       console.log(error);
     });
 };
-
-function authCallout(){
-    
-    var data = JSON.stringify({"grant_type":"client_credentials","client_id":"lrdyhupmuhr4zl7vwj8a3giq","client_secret":"g8EvTsIYGpPFxovz9nKj0cXy","account_id":"514009708"});
-    var authToken;
-    var config = {
-      method: 'post',
-      url: 'https://mc4f63jqqhfc51yw6d1h0n1ns1-m.auth.marketingcloudapis.com/v2/token',
-      headers: { 
-        'Content-Type': 'application/json'
-      },
-      data : data
-    };
-
-    axios(config)
-    .then(function (response) {
-        console.log('response token '+response.data.access_token);
-        return response.data.access_token;
-    })
-    .catch(function (error) {
-        return undefined;
-        console.log(error);
-    });
-}
 
 /*
  * POST Handler for /validate/ route of Activity.

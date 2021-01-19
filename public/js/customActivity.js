@@ -497,7 +497,7 @@ define([
 			+'    <s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">'
 			+'	<CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">'
 			+'	    <Objects xsi:type="DataExtension">'
-			+'		<CustomerKey>CustomerKey</CustomerKey>'
+			+'		<CustomerKey>DEKey</CustomerKey>'
 			+'		<Name>DEName</Name>'
 			+'		<IsSendable>true</IsSendable>'
 			+'		<SendableDataExtensionField>'

@@ -234,15 +234,16 @@ exports.DERow = function (req, res) {
         +'        <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">'
         +'            <RetrieveRequest>'
         +'                <ObjectType>DataExtensionObject[Data Extension Template]</ObjectType>'
-        +'                <Properties>Template Name</Properties>'
         +'                  <Properties>Hearsay Org ID</Properties>'
         +'                  <Properties>Hearsay User Reference ID</Properties>'
-        +'                  <Properties>Customer Name</Properties>'
+        +'                  <Properties>Customer Unique ID</Properties>'
+        +'                  <Properties>Hearsay User Reference ID</Properties>'
+        +'                  <Properties>Name</Properties>'
+        +'                  <Properties>Phone</Properties>'
         +'                  <Properties>Option 1</Properties>'
         +'                  <Properties>Option 2</Properties>'
         +'                  <Properties>Option 3</Properties>'
         +'                  <Properties>Option 4</Properties>'
-        +'                  <Properties>Option 5</Properties>'
         +'                <Filter xsi:type="SimpleFilterPart">'
         +'                  <Property>Template Name</Property>'
         +'                  <SimpleOperator>equals</SimpleOperator>'
@@ -280,6 +281,7 @@ exports.DERow = function (req, res) {
             })
             .catch(function (error) {
                 console.log(error);
+                res.status(500).send(error);
             });
         
     /*})
@@ -363,6 +365,7 @@ exports.retrieveDERows =  function (req, res) {
             })
             .catch(function (error) {
                 console.log(error);
+                res.status(500).send(error);
             });
         
     /*})

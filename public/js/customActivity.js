@@ -336,6 +336,11 @@ define([
 				return this.text == 'Phone'; 
 			}).attr('selected', true);
 			
+			intializeSelectHearsay('select-hearsay1');
+			intializeSelectHearsay('select-hearsay2');
+			intializeSelectHearsay('select-hearsay3');
+			intializeSelectHearsay('select-hearsay4');
+			intializeSelectHearsay('select-hearsay5');
 			intializeSelectJourney('select-journey1');
 			intializeSelectJourney('select-journey2');
 			intializeSelectJourney('select-journey3');

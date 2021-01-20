@@ -536,6 +536,7 @@ define([
 			method: "POST",
 			body: JSON.stringify({
 			    name: inputValue,
+			    token: authToken,
 			    xmlData: soapMessage
 			}),
 		})

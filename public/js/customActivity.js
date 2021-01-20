@@ -32,12 +32,11 @@ define([
     function onRender() {
         $('#inputField-01').hide();
         // JB will respond the first time 'ready' is called with 'initActivity'
-        connection.trigger('ready');
         connection.trigger('requestTokens');
-        connection.trigger('requestEndpoints');
+	connection.trigger('requestEndpoints');
+	connection.trigger('ready');
         connection.trigger('requestSchema');
 	    
-        // Disable the next button if a value isn't selected
 	$('.slds-select.hearsay').on('change', function(event) {
 		$('.slds-select.hearsay').find('option').show();
 		intializeSelectHearsay(event.target.id);
@@ -73,7 +72,7 @@ define([
         if (data) {
             payload = data;
         }
-	var dataOptions = new Array("firstName","lastName","name","email","title","phone","birthdate","preferredName","sourceId","sourceOwnerId","sourceOrganizationId");
+	/*var dataOptions = new Array("firstName","lastName","name","email","title","phone","birthdate","preferredName","sourceId","sourceOwnerId","sourceOrganizationId");
 	    
 	for (var i=0; i < dataOptions.length;++i){
 		addOption($('#select-hearsay1'), dataOptions[i], dataOptions[i]);
@@ -85,10 +84,13 @@ define([
 		addOption($('#select-hearsay7'), dataOptions[i], dataOptions[i]);
 		addOption($('#select-hearsay8'), dataOptions[i], dataOptions[i]);
 		addOption($('#select-hearsay9'), dataOptions[i], dataOptions[i]);
-	}
+	}*/
 	
 	fetch("/retrieve/derows/", {
-		method: "POST"
+		method: "POST",
+		body: JSON.stringify({
+			token: authToken,
+		}),
 	})
 	.then(response => response.text())
 	.then(dataValue => {
@@ -131,7 +133,7 @@ define([
             });
         });
 	    
-	$("#select-hearsay1 option").filter(function() {
+	/*$("#select-hearsay1 option").filter(function() {
 		return this.text == 'Name';
 	}).attr('selected', true);
 	    
@@ -152,6 +154,25 @@ define([
 	    
 	$("#select-hearsay5 option").filter(function() {
 		intializeSelectHearsay('select-hearsay5');
+		return this.text == 'Phone'; 
+	}).attr('selected', true);*/
+	$("#select-journey1 option").filter(function() {
+		return this.text == 'Hearsay Org ID';
+	}).attr('selected', true);
+	    
+	$("#select-journey2 option").filter(function() {
+		return this.text == 'Agent ID';
+	}).attr('selected', true);
+	    
+	$("#select-journey3 option").filter(function() {
+		return this.text == 'Cust ID'; 
+	}).attr('selected', true);
+		
+	$("#select-journey4 option").filter(function() {
+		return this.text == 'Name'; 
+	}).attr('selected', true);
+	    
+	$("#select-journey5 option").filter(function() {
 		return this.text == 'Phone'; 
 	}).attr('selected', true);
 
@@ -314,11 +335,11 @@ define([
 			showStep(null, 1);
 			connection.trigger('ready');
 		} else {
-			intializeSelectHearsay('select-hearsay1');
-			intializeSelectHearsay('select-hearsay2');
-			intializeSelectHearsay('select-hearsay3');
-			intializeSelectHearsay('select-hearsay4');
-			intializeSelectHearsay('select-hearsay5');
+			intializeSelectJourney('select-journey1');
+			intializeSelectJourney('select-journey2');
+			intializeSelectJourney('select-journey3');
+			intializeSelectJourney('select-journey4');
+			intializeSelectJourney('select-journey5');
 			connection.trigger('nextStep');	
 		}
             }
@@ -353,7 +374,10 @@ define([
 		const templateName = { DEName: selectOption }
 		fetch("/dataextension/row/", {
 			method: "POST",
-			body: JSON.stringify(templateName),
+			body: JSON.stringify({
+			    DEName: selectOption,
+			    token: authToken
+			}),
 		})
 		.then(response => response.text())
 		.then(dataValue => {

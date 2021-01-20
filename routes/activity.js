@@ -98,12 +98,21 @@ exports.execute = function (req, res) {
 };
 
 
-/*
+/*/data/v1/async/dataextensions/key:'+TargetObject+'/rows
  * POST Handler for /publish/ route of Activity.
  */
 exports.publish = function (req, res) {
     // Data from the req and put it in an array accessible to the main app.
     //console.log( req.body );
+    logData(req);
+    res.send(200, 'Publish');
+};
+
+exports.insertDERows = function (req, res) {
+    
+    console.log('request DEName is '+JSON.stringify(req.body));
+    var xml2js = require('xml2js');
+    
     logData(req);
     res.send(200, 'Publish');
 };

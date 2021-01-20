@@ -150,7 +150,7 @@ exports.createDExtension = function (req, res) {
       data : soapMessage
     };
     
-    axios(config)
+    axios(dataconfig)
     .then(function (response) {
         console.log(JSON.stringify(response.data));
         let rawdata = response.data;

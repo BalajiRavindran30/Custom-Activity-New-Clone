@@ -157,7 +157,7 @@ exports.createDExtension = function (req, res) {
         var data = '';
         var parser = new xml2js.Parser();
         
-        //if(req.body.xmlData) data = req.body.xmlData.replace('cateID','mc4f63jqqhfc51yw6d1h0n1ns1-m');
+        if(req.body.xmlData) data = req.body.xmlData;
         if(req.body.name) data = data.replace('DEKey', req.body.name+'Key').replace('DEName', req.body.name);
         
         parser.parseString(rawdata, function(err,result){

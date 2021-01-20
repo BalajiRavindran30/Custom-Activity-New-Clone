@@ -84,6 +84,7 @@ define([
 		addOption($('#select-hearsay6'), dataOptions[i], dataOptions[i]);
 		addOption($('#select-hearsay7'), dataOptions[i], dataOptions[i]);
 		addOption($('#select-hearsay8'), dataOptions[i], dataOptions[i]);
+		addOption($('#select-hearsay9'), dataOptions[i], dataOptions[i]);
 	}
 	
 	fetch("/retrieve/derows/", {
@@ -147,6 +148,11 @@ define([
 	$("#select-hearsay4 option").filter(function() {
 		intializeSelectHearsay('select-hearsay4');
 		return this.text == 'SourceOrganizationId'; 
+	}).attr('selected', true);
+	    
+	$("#select-hearsay5 option").filter(function() {
+		intializeSelectHearsay('select-hearsay5');
+		return this.text == 'Phone'; 
 	}).attr('selected', true);
 
         // If there is no message selected, disable the next button
@@ -275,7 +281,8 @@ define([
 		  $('#select-journey5').append('<option value="'+keyfield+'">'+keyfield.charAt(0).toUpperCase() + keyfield.slice(1)+'</option>');	
 		  $('#select-journey6').append('<option value="'+keyfield+'">'+keyfield.charAt(0).toUpperCase() + keyfield.slice(1)+'</option>');
 		  $('#select-journey7').append('<option value="'+keyfield+'">'+keyfield.charAt(0).toUpperCase() + keyfield.slice(1)+'</option>');
-		  $('#select-journey8').append('<option value="'+keyfield+'">'+keyfield.charAt(0).toUpperCase() + keyfield.slice(1)+'</option>');	
+		  $('#select-journey8').append('<option value="'+keyfield+'">'+keyfield.charAt(0).toUpperCase() + keyfield.slice(1)+'</option>');
+		  $('#select-journey9').append('<option value="'+keyfield+'">'+keyfield.charAt(0).toUpperCase() + keyfield.slice(1)+'</option>');
 	  }
 	}
     }
@@ -311,6 +318,7 @@ define([
 			intializeSelectHearsay('select-hearsay2');
 			intializeSelectHearsay('select-hearsay3');
 			intializeSelectHearsay('select-hearsay4');
+			intializeSelectHearsay('select-hearsay5');
 			connection.trigger('nextStep');	
 		}
             }
@@ -325,6 +333,7 @@ define([
             if(getIntegrationName('#select-journey6') != '--Select--' && getIntegrationName('#select-hearsay6') != '--Select--') hearsayfields [getIntegrationType('#select-hearsay6')] = getIntegrationType('#select-journey6');
             if(getIntegrationName('#select-journey7') != '--Select--' && getIntegrationName('#select-hearsay7') != '--Select--') hearsayfields [getIntegrationType('#select-hearsay7')] = getIntegrationType('#select-journey7');
             if(getIntegrationName('#select-journey8') != '--Select--' && getIntegrationName('#select-hearsay8') != '--Select--') hearsayfields [getIntegrationType('#select-hearsay8')] = getIntegrationType('#select-journey8');
+	    if(getIntegrationName('#select-journey9') != '--Select--' && getIntegrationName('#select-hearsay9') != '--Select--') hearsayfields [getIntegrationType('#select-hearsay9')] = getIntegrationType('#select-journey9');
             console.log('hearsayfields '+hearsayfields);
 	    var div_data = '';
 	    for (var key in hearsayfields) {
@@ -461,14 +470,13 @@ define([
 		   let fieldName = '';
 		   for(var x in hearsayfields){
 			fieldName =  hearsayfields[x].toString();
-			if(fieldName.toLowerCase().includes("email")){
+			if(fieldName.toLowerCase().includes("name") || fieldName.toLowerCase().includes("cust") || fieldName.toLowerCase().includes("agent") || fieldName.toLowerCase().includes("org") || fieldName.toLowerCase().includes("phone")){
 			   	fieldListString += '<Field>'
 				+'<CustomerKey>'+fieldName+'</CustomerKey>'
 				+'<Name>'+fieldName+'</Name>'
-				+'<FieldType>EmailAddress</FieldType>'
-				+'<MaxLength>250</MaxLength>'
-				+'<IsRequired>false</IsRequired>'
-				+'<IsPrimaryKey>true</IsPrimaryKey>'
+				+'<FieldType>Text</FieldType>'
+				+'<IsRequired>true</IsRequired>'
+				+'<IsPrimaryKey>false</IsPrimaryKey>'
 				+'</Field>'
 			} else {
 				fieldListString += '<Field>'
@@ -482,7 +490,14 @@ define([
 			}
 			hearsayfields[x] = '{{'+eventDefKey+'.\"' +fieldName+ '\"}}';   
 		   }
-		
+		fieldListString += '<Field>'
+				+'<CustomerKey>Email</CustomerKey>'
+				+'<Name>Email</Name>'
+				+'<FieldType>EmailAddress</FieldType>'
+				+'<MaxLength>250</MaxLength>'
+				+'<IsRequired>true</IsRequired>'
+				+'<IsPrimaryKey>true</IsPrimaryKey>'
+				+'</Field>'
 		console.log('fieldListString '+fieldListString);
 		let soapMessage = '<?xml version="1.0" encoding="UTF-8"?>'
 		+'<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:u="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">'
@@ -509,6 +524,7 @@ define([
 		+'<Fields>'
 		+fieldListString
 		+'</Fields>'
+		+'</Objects>'
 		+'        </CreateRequest>'
 		+'    </s:Body>'
 		+'</s:Envelope>';

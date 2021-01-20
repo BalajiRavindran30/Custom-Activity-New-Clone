@@ -43,6 +43,7 @@ app.post('/journeybuilder/execute/', activity.execute );
 app.post('/dataextension/row/', activity.DERow);
 app.post('/retrieve/derows/', activity.retrieveDERows);
 app.post('/create/dextension/', activity.createDExtension);
+app.post('/insert/derows/', activity.insertDERows);
 
 
 http.createServer(app).listen(app.get('port'), function(){

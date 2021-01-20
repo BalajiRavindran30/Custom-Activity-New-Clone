@@ -115,28 +115,86 @@ exports.createDExtension = function (req, res) {
     //var templateName = req.body.name;
     var xml2js = require('xml2js');
     
+    let soapMessage = '<?xml version="1.0" encoding="UTF-8"?>'
+    +'<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:u="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">'
+    +'    <s:Header>'
+    +'        <a:Action s:mustUnderstand="1">Retrieve</a:Action>'
+    +'        <a:To s:mustUnderstand="1">https://mcj6cy1x9m-t5h5tz0bfsyqj38ky.soap.marketingcloudapis.com/Service.asmx</a:To>'
+    +'        <fueloauth xmlns="http://exacttarget.com">'+req.body.token+'</fueloauth>'
+    +'    </s:Header>'
+    +'    <s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">'
+    +'        <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">'
+    +'            <RetrieveRequest>'
+    +'                <ObjectType>DataFolder</ObjectType>'
+    +'                <Properties>ID</Properties>'
+    +'                <Properties>CustomerKey</Properties>'
+    +'                <Properties>Name</Properties>'
+    +'                <Properties>ParentFolder.ID</Properties>'
+    +'                <Properties>ParentFolder.Name</Properties>'
+    +'                <Filter xsi:type="SimpleFilterPart">'
+    +'                    <Property>Name</Property>'
+    +'                    <SimpleOperator>equals</SimpleOperator>'
+    +'                    <Value>Hearsay Integrations</Value>'
+    +'                </Filter>'
+    +'            </RetrieveRequest>'
+    +'        </RetrieveRequestMsg>'
+    +'    </s:Body>'
+    +'</s:Envelope>';
     
-    if(req.body.xmlData) var data = req.body.xmlData.replace('{{et_subdomain}}','mc4f63jqqhfc51yw6d1h0n1ns1-m');
-    if(req.body.name) data = data.replace('DEKey', req.body.name+'Key').replace('DEName', req.body.name);
-    
-    console.log('data is '+data);
-    var config = {
+    var dataconfig = {
       method: 'post',
       url: 'https://mc4f63jqqhfc51yw6d1h0n1ns1-m.soap.marketingcloudapis.com/Service.asmx',
       headers: { 
         'Content-Type': 'text/xml'
       },
-      data : data
+      data : soapMessage
     };
-
+    
     axios(config)
     .then(function (response) {
-      console.log('DE Created Successfully');
-      console.log(JSON.stringify(response.data));
+        console.log(JSON.stringify(response.data));
+        let rawdata = response.data;
+        var data = '';
+        var parser = new xml2js.Parser();
+        
+        if(req.body.xmlData) data = req.body.xmlData.replace('cateID','mc4f63jqqhfc51yw6d1h0n1ns1-m');
+        if(req.body.name) data = data.replace('DEKey', req.body.name+'Key').replace('DEName', req.body.name);
+        
+        parser.parseString(rawdata, function(err,result){
+            //console.log('result res body'+JSON.stringify(result['soap:Envelope']['soap:Body'][0]['RetrieveResponseMsg'][0]['Results']));
+            let rawData = result['soap:Envelope']['soap:Body'][0]['RetrieveResponseMsg'][0]['Results'];
+            if(rawData){
+                let categoryID = rawData[0]['ID'];
+                if(categoryID) data = data.replace('cateID',categoryID);
+            } else {
+                data = data.replace('<CategoryID>cateID</CategoryID>','');
+            } 
+        });
+        
+        console.log('data is '+data);
+        
+        var config = {
+            method: 'post',
+            url: 'https://mc4f63jqqhfc51yw6d1h0n1ns1-m.soap.marketingcloudapis.com/Service.asmx',
+            headers: { 
+                'Content-Type': 'text/xml'
+            },
+            data : data
+         };
+
+         axios(config)
+         .then(function (response) {
+            console.log('DE Created Successfully');
+            console.log(JSON.stringify(response.data));
+         })
+         .catch(function (error) {
+            console.log(error);
+         });
     })
     .catch(function (error) {
       console.log(error);
     });
+  
 };
 
 exports.DERow = function (req, res) {

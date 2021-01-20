@@ -127,25 +127,6 @@ define([
 		intializeSelectHearsay('select-hearsay5');
 		return this.text == 'Phone'; 
 	}).attr('selected', true);*/
-	$("#select-journey1 option").filter(function() {
-		return this.text == 'Hearsay Org ID';
-	}).attr('selected', true);
-	    
-	$("#select-journey2 option").filter(function() {
-		return this.text == 'Agent ID';
-	}).attr('selected', true);
-	    
-	$("#select-journey3 option").filter(function() {
-		return this.text == 'Cust ID'; 
-	}).attr('selected', true);
-		
-	$("#select-journey4 option").filter(function() {
-		return this.text == 'Name'; 
-	}).attr('selected', true);
-	    
-	$("#select-journey5 option").filter(function() {
-		return this.text == 'Phone'; 
-	}).attr('selected', true);
 
         // If there is no message selected, disable the next button
         if (!mapfields) {
@@ -335,6 +316,26 @@ define([
 			showStep(null, 1);
 			connection.trigger('ready');
 		} else {
+			$("#select-journey1 option").filter(function() {
+				return this.text == 'Hearsay Org ID';
+			}).attr('selected', true);
+
+			$("#select-journey2 option").filter(function() {
+				return this.text == 'Agent ID';
+			}).attr('selected', true);
+
+			$("#select-journey3 option").filter(function() {
+				return this.text == 'Cust ID'; 
+			}).attr('selected', true);
+
+			$("#select-journey4 option").filter(function() {
+				return this.text == 'Name'; 
+			}).attr('selected', true);
+
+			$("#select-journey5 option").filter(function() {
+				return this.text == 'Phone'; 
+			}).attr('selected', true);
+			
 			intializeSelectJourney('select-journey1');
 			intializeSelectJourney('select-journey2');
 			intializeSelectJourney('select-journey3');

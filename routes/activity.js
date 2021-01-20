@@ -157,7 +157,7 @@ exports.createDExtension = function (req, res) {
         var data = '';
         var parser = new xml2js.Parser();
         
-        if(req.body.xmlData) data = req.body.xmlData.replace('cateID','mc4f63jqqhfc51yw6d1h0n1ns1-m');
+        //if(req.body.xmlData) data = req.body.xmlData.replace('cateID','mc4f63jqqhfc51yw6d1h0n1ns1-m');
         if(req.body.name) data = data.replace('DEKey', req.body.name+'Key').replace('DEName', req.body.name);
         
         parser.parseString(rawdata, function(err,result){
@@ -185,10 +185,11 @@ exports.createDExtension = function (req, res) {
          axios(config)
          .then(function (response) {
             console.log('DE Created Successfully');
-            console.log(JSON.stringify(response.data));
+            res.status(200).send('DataExtension Created!');
          })
          .catch(function (error) {
-            console.log(error);
+             res.status(400).send(error);
+             console.log(error);
          });
     })
     .catch(function (error) {

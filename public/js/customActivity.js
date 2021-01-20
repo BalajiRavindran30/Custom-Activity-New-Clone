@@ -20,9 +20,9 @@ define([
     var eventDefKey;
     $(window).ready(onRender);
 
-    connection.on('initActivity', initialize);
     connection.on('requestedTokens', onGetTokens);
     connection.on('requestedEndpoints', onGetEndpoints);
+    connection.on('initActivity', initialize);
     connection.on('requestedSchema', onRequestSchema);
 
     connection.on('clickedNext', onClickedNext);

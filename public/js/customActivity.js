@@ -85,35 +85,6 @@ define([
 		addOption($('#select-hearsay8'), dataOptions[i], dataOptions[i]);
 		addOption($('#select-hearsay9'), dataOptions[i], dataOptions[i]);
 	}*/
-	
-	fetch("/retrieve/derows/", {
-		method: "POST",
-		body: JSON.stringify({
-			token: authToken,
-		}),
-	})
-	.then(response => response.text())
-	.then(dataValue => {
-		console.log('Success:', dataValue);
-                for(var x in JSON.parse(dataValue)){
-                  console.log('data '+JSON.parse(dataValue)[x]['Properties'][0]['Property'][0]['Value']);
-                  DERowList.push(JSON.parse(dataValue)[x]['Properties'][0]['Property'][0]['Value']);
-                }
-                console.log('DERowList '+DERowList);
-		DERowList.forEach((option) => {
-			$('#select-01').append($('<option>', {
-				value: option,
-				text: option
-			}));
-		});
-		$('#select-01').append($('<option>', {
-			value: 'CurrentJourney',
-			text: 'Current Journey'
-		}));
-	})
-	.catch((error) => {
-		  console.error('Error:', error);
-	});
         
         var mapfields;
         var hasInArguments = Boolean(
@@ -284,6 +255,35 @@ define([
         // Response: tokens = { token: <legacy token>, fuel2token: <fuel api token> }
          console.log(tokens);
 	    authToken = tokens.fuel2token;
+	    
+	    fetch("/retrieve/derows/", {
+			method: "POST",
+			body: JSON.stringify({
+				token: authToken,
+			}),
+		})
+		.then(response => response.text())
+		.then(dataValue => {
+			console.log('Success:', dataValue);
+			for(var x in JSON.parse(dataValue)){
+			  console.log('data '+JSON.parse(dataValue)[x]['Properties'][0]['Property'][0]['Value']);
+			  DERowList.push(JSON.parse(dataValue)[x]['Properties'][0]['Property'][0]['Value']);
+			}
+			console.log('DERowList '+DERowList);
+			DERowList.forEach((option) => {
+				$('#select-01').append($('<option>', {
+					value: option,
+					text: option
+				}));
+			});
+			$('#select-01').append($('<option>', {
+				value: 'CurrentJourney',
+				text: 'Current Journey'
+			}));
+		})
+		.catch((error) => {
+			  console.error('Error:', error);
+		});
     }
     
     function onRequestSchema(data){

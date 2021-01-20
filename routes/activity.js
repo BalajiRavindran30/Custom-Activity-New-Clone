@@ -203,9 +203,10 @@ exports.DERow = function (req, res) {
     //console.log( req.body );
     console.log('request DEName is '+JSON.stringify(req.body));
     var templateName = req.body.DEName;
+    var authToken = req.body.token;
     var xml2js = require('xml2js');
     
-    var data = JSON.stringify({"grant_type":"client_credentials","client_id":"lrdyhupmuhr4zl7vwj8a3giq","client_secret":"g8EvTsIYGpPFxovz9nKj0cXy","account_id":"514009708"});
+    /*var data = JSON.stringify({"grant_type":"client_credentials","client_id":"lrdyhupmuhr4zl7vwj8a3giq","client_secret":"g8EvTsIYGpPFxovz9nKj0cXy","account_id":"514009708"});
     var authToken;
     var config = {
       method: 'post',
@@ -220,7 +221,7 @@ exports.DERow = function (req, res) {
     .then(function (response) {
       console.log(JSON.stringify(response.data));
         authToken = response.data.access_token;
-        console.log('authToken '+authToken);
+        console.log('authToken '+authToken);*/
         
         let soapMessage = '<?xml version="1.0" encoding="UTF-8"?>'
         +'<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:u="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">'
@@ -281,18 +282,19 @@ exports.DERow = function (req, res) {
                 console.log(error);
             });
         
-    })
+    /*})
     .catch(function (error) {
       console.log(error);
-    });
+    });*/
     //logData(req);
 };
 
 exports.retrieveDERows =  function (req, res) {
     console.log('request DEName is '+JSON.stringify(req.body));
     var xml2js = require('xml2js');
+    var authToken = req.body.token;
     
-    var data = JSON.stringify({"grant_type":"client_credentials","client_id":"lrdyhupmuhr4zl7vwj8a3giq","client_secret":"g8EvTsIYGpPFxovz9nKj0cXy","account_id":"514009708"});
+    /*var data = JSON.stringify({"grant_type":"client_credentials","client_id":"lrdyhupmuhr4zl7vwj8a3giq","client_secret":"g8EvTsIYGpPFxovz9nKj0cXy","account_id":"514009708"});
     var authToken;
     var config = {
       method: 'post',
@@ -307,7 +309,7 @@ exports.retrieveDERows =  function (req, res) {
     .then(function (response) {
       console.log(JSON.stringify(response.data));
         authToken = response.data.access_token;
-        console.log('authToken '+authToken);
+        console.log('authToken '+authToken);*/
         
         let soapMessage = '<?xml version="1.0" encoding="UTF-8"?>'
         +'<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:u="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">'
@@ -363,10 +365,10 @@ exports.retrieveDERows =  function (req, res) {
                 console.log(error);
             });
         
-    })
+    /*})
     .catch(function (error) {
       console.log(error);
-    });
+    });*/
 };
 
 /*
